@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ألعاب أوفلاين - DLT Store</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        darkBg: '#0B001A', // Deep Cosmic Purple
+                        cardBg: '#1A0B2E', // Lighter Cosmic Purple
+                        neonGreen: '#00FFA3', // Alien Green
+                        neonPurple: '#D900FF', // Nebula Pink/Purple
+                        neonBlue: '#00F0FF', // Cyan Star
+                        spaceBlue: '#2D1B69',
+                    },
+                    fontFamily: {
+                        sans: ['Cairo', 'sans-serif'],
+                        gaming: ['Orbitron', 'sans-serif'],
+                    },
+                    backgroundImage: {
+                        'space-gradient': 'radial-gradient(circle at center, #2D1B69 0%, #0B001A 100%)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #0B001A;
+            color: #ffffff;
+            background-image: 
+                radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 3px),
+                radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 2px),
+                radial-gradient(white, rgba(255,255,255,.1) 2px, transparent 3px);
+            background-size: 550px 550px, 350px 350px, 250px 250px;
+            background-position: 0 0, 40px 60px, 130px 270px;
+            animation: starMove 100s linear infinite;
+        }
+        @keyframes starMove {
+            from { background-position: 0 0, 40px 60px, 130px 270px; }
+            to { background-position: 550px 550px, 390px 410px, 680px 820px; }
+        }
+        .neon-text {
+            text-shadow: 0 0 10px rgba(217, 0, 255, 0.7), 0 0 20px rgba(0, 240, 255, 0.5);
+        }
+    </style>
+</head>
+<body class="bg-darkBg text-white flex flex-col min-h-screen">
+
+    <!-- Navbar -->
+    <nav class="bg-cardBg/80 backdrop-blur-md sticky top-0 z-50 border-b border-white/10 shadow-[0_0_15px_rgba(188,19,254,0.3)]">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            
+
+
+            <div class="text-xl md:text-2xl font-bold font-gaming text-neonPurple tracking-wider flex items-center gap-2">
+                <a href="index.html" class="flex items-center gap-2">
+                    <span class="text-2xl md:text-3xl">🪐</span> DLT <span class="text-neonBlue">STORE</span>
+                </a>
+            </div>
+
+            <div class="hidden md:flex space-x-6 space-x-reverse">
+                <a href="index.html" class="hover:text-neonPurple transition hover:shadow-[0_0_10px_rgba(217,0,255,0.5)]">الرئيسية</a>
+                <a href="pc-games.html" class="hover:text-neonPurple transition hover:shadow-[0_0_10px_rgba(217,0,255,0.5)]">ألعاب PC</a>
+                <a href="offline-games.html" class="text-neonPurple border-b-2 border-neonPurple shadow-[0_0_10px_rgba(217,0,255,0.5)]">ألعاب أوفلاين</a>
+            </div>
+            
+            <div class="flex items-center space-x-2 md:space-x-4 space-x-reverse">
+                <button class="hover:text-neonBlue transition transform hover:scale-110">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+                </button>
+                <a href="cart.html" class="relative hover:text-neonBlue transition transform hover:scale-110">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+                    <span id="cart-count" class="absolute -top-2 -right-2 bg-neonBlue text-darkBg text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center shadow-[0_0_10px_#00F0FF] hidden">0</span>
+                </a>
+            </div>
+        </div>
+
+
+    </nav>
+
+    <!-- Page Header -->
+    <header class="bg-gradient-to-b from-spaceBlue/50 to-transparent py-16 text-center relative overflow-hidden">
+        <div class="container mx-auto px-4 relative z-10">
+            <h1 class="text-4xl md:text-6xl font-bold font-gaming mb-4 text-neonPurple neon-text">ألعاب التختيم</h1>
+            <p class="text-xl text-gray-300 max-w-2xl mx-auto">عش أجمل القصص والمغامرات في عوالم خيالية لا تنتهي.</p>
+        </div>
+        <!-- Decorative Elements -->
+        <div class="absolute top-0 left-0 w-full h-full pointer-events-none">
+             <div class="absolute top-10 right-10 w-32 h-32 bg-neonPurple/10 rounded-full blur-3xl"></div>
+             <div class="absolute bottom-10 left-10 w-40 h-40 bg-neonBlue/10 rounded-full blur-3xl"></div>
+        </div>
+    </header>
+
+    <!-- Products Section -->
+    <section class="container mx-auto px-4 py-8 flex-grow">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- Product 1: God of War -->
+            <div class="bg-cardBg rounded-xl overflow-hidden border border-white/5 hover:border-neonPurple/50 transition duration-300 group shadow-lg hover:shadow-neonPurple/20">
+                <div class="relative">
+                    <img src="https://images.unsplash.com/photo-1605901309584-818e25960b8f?q=80&w=400&auto=format&fit=crop" alt="God of War" class="w-full h-48 object-cover group-hover:scale-110 transition duration-500">
+                    <span class="absolute bottom-2 left-2 bg-black/80 text-neonPurple text-xs font-bold px-2 py-1 rounded border border-neonPurple/30">Offline</span>
+                </div>
+                <div class="p-4">
+                    <h3 class="font-bold text-lg mb-1 truncate text-white group-hover:text-neonPurple transition">God of War</h3>
+                    <p class="text-gray-400 text-sm mb-3">ملحمة أسطورية</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-neonGreen font-bold text-xl drop-shadow-[0_0_5px_rgba(57,255,20,0.5)]">179 ر.س</span>
+                        <button class="add-to-cart-btn bg-gradient-to-r from-neonPurple to-indigo-600 text-white p-2 rounded-full hover:shadow-[0_0_10px_rgba(188,19,254,0.5)] transition">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" /></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product 2: The Last of Us -->
+            <div class="bg-cardBg rounded-xl overflow-hidden border border-white/5 hover:border-neonPurple/50 transition duration-300 group shadow-lg hover:shadow-neonPurple/20">
+                <div class="relative">
+                    <img src="https://images.unsplash.com/photo-1627856014759-085296e22863?q=80&w=400&auto=format&fit=crop" alt="The Last of Us" class="w-full h-48 object-cover group-hover:scale-110 transition duration-500">
+                    <span class="absolute bottom-2 left-2 bg-black/80 text-neonPurple text-xs font-bold px-2 py-1 rounded border border-neonPurple/30">Offline</span>
+                </div>
+                <div class="p-4">
+                    <h3 class="font-bold text-lg mb-1 truncate text-white group-hover:text-neonPurple transition">The Last of Us</h3>
+                    <p class="text-gray-400 text-sm mb-3">قصة مؤثرة ورسوم واقعية</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-neonGreen font-bold text-xl drop-shadow-[0_0_5px_rgba(57,255,20,0.5)]">249 ر.س</span>
+                        <button class="add-to-cart-btn bg-gradient-to-r from-neonPurple to-indigo-600 text-white p-2 rounded-full hover:shadow-[0_0_10px_rgba(188,19,254,0.5)] transition">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" /></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product 3: Red Dead Redemption 2 -->
+            <div class="bg-cardBg rounded-xl overflow-hidden border border-white/5 hover:border-neonPurple/50 transition duration-300 group shadow-lg hover:shadow-neonPurple/20">
+                <div class="relative">
+                    <img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=400&auto=format&fit=crop" alt="RDR2" class="w-full h-48 object-cover group-hover:scale-110 transition duration-500">
+                    <span class="absolute top-2 right-2 bg-neonBlue text-darkBg text-xs font-bold px-2 py-1 rounded">Masterpiece</span>
+                    <span class="absolute bottom-2 left-2 bg-black/80 text-neonPurple text-xs font-bold px-2 py-1 rounded border border-neonPurple/30">Offline</span>
+                </div>
+                <div class="p-4">
+                    <h3 class="font-bold text-lg mb-1 truncate text-white group-hover:text-neonPurple transition">Red Dead Redemption 2</h3>
+                    <p class="text-gray-400 text-sm mb-3">عالم الغرب المتوحش</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-neonGreen font-bold text-xl drop-shadow-[0_0_5px_rgba(57,255,20,0.5)]">150 ر.س</span>
+                        <button class="add-to-cart-btn bg-gradient-to-r from-neonPurple to-indigo-600 text-white p-2 rounded-full hover:shadow-[0_0_10px_rgba(188,19,254,0.5)] transition">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" /></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product 4: Spider-Man -->
+            <div class="bg-cardBg rounded-xl overflow-hidden border border-white/5 hover:border-neonPurple/50 transition duration-300 group shadow-lg hover:shadow-neonPurple/20">
+                <div class="relative">
+                    <img src="https://images.unsplash.com/photo-1612036782180-6f0b6cd846fe?q=80&w=400&auto=format&fit=crop" alt="Spider-Man" class="w-full h-48 object-cover group-hover:scale-110 transition duration-500">
+                    <span class="absolute bottom-2 left-2 bg-black/80 text-neonPurple text-xs font-bold px-2 py-1 rounded border border-neonPurple/30">Offline</span>
+                </div>
+                <div class="p-4">
+                    <h3 class="font-bold text-lg mb-1 truncate text-white group-hover:text-neonPurple transition">Spider-Man Remastered</h3>
+                    <p class="text-gray-400 text-sm mb-3">مغامرات في نيويورك</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-neonGreen font-bold text-xl drop-shadow-[0_0_5px_rgba(57,255,20,0.5)]">180 ر.س</span>
+                        <button class="add-to-cart-btn bg-gradient-to-r from-neonPurple to-indigo-600 text-white p-2 rounded-full hover:shadow-[0_0_10px_rgba(188,19,254,0.5)] transition">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" /></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-cardBg/50 pt-16 pb-8 border-t border-white/10 mt-12 backdrop-blur-sm relative z-10">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+                <!-- Brand Section (Right in RTL) -->
+                <div class="text-center md:text-right">
+                    <h3 class="text-2xl font-bold font-gaming text-neonPurple mb-4 drop-shadow-[0_0_5px_rgba(188,19,254,0.5)]">DLT Store</h3>
+                    <p class="text-gray-300 mb-6 text-lg">إذا كان للعب وجهة... فهنا مجرته 🪐</p>
+                    <div class="flex justify-center md:justify-start gap-4">
+                        <!-- TikTok Icon -->
+                        <a href="#" class="bg-white/5 hover:bg-neonPurple/20 p-3 rounded-full transition group border border-white/10 hover:border-neonPurple/50">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-300 group-hover:text-neonPurple transition" fill="currentColor" viewBox="0 0 448 512">
+                                <path d="M448 209.91a210.06 210.06 0 0 1-122.77-39.25V349.38A162.55 162.55 0 1 1 185 188.31V278.2a74.62 74.62 0 1 0 52.23 71.18V0l88 0a121.18 121.18 0 0 0 1.86 22.17h0A122.18 122.18 0 0 0 381 102.39a121.43 121.43 0 0 0 67 20.14z"/>
+                            </svg>
+                        </a>
+                        <!-- Instagram Icon -->
+                         <a href="#" class="bg-white/5 hover:bg-neonBlue/20 p-3 rounded-full transition group border border-white/10 hover:border-neonBlue/50">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-300 group-hover:text-neonBlue transition" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.5 18.5h-13a2 2 0 01-2-2v-13a2 2 0 012-2h13a2 2 0 012 2v13a2 2 0 01-2 2z" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Links Section (Left in RTL) -->
+                <div class="text-center md:text-left">
+                    <h3 class="text-xl font-bold text-white mb-6 border-b border-white/10 inline-block md:block pb-2">روابط مهمة</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-400 hover:text-neonBlue transition flex items-center justify-center md:justify-end gap-2 group">
+                            <span class="group-hover:-translate-x-1 transition">من نحن ؟</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-neonBlue opacity-0 group-hover:opacity-100 transition" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
+                        </a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-neonBlue transition flex items-center justify-center md:justify-end gap-2 group">
+                            <span class="group-hover:-translate-x-1 transition">سياسة الاستبدال والاسترجاع</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-neonBlue opacity-0 group-hover:opacity-100 transition" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
+                        </a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-neonBlue transition flex items-center justify-center md:justify-end gap-2 group">
+                            <span class="group-hover:-translate-x-1 transition">تواصل معنا</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-neonBlue opacity-0 group-hover:opacity-100 transition" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
+                        </a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-white/5 pt-8 text-center text-gray-600 text-sm">
+                <p>&copy; 2024 DLT Store. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Cart Logic -->
+    <script src="cart.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>
