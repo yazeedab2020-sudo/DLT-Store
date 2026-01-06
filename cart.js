@@ -105,7 +105,7 @@ function renderCartItems() {
                     <img src="${item.image}" alt="${item.name}" class="w-16 h-16 object-cover rounded-md flex-shrink-0">
                     <div class="min-w-0">
                         <h4 class="font-bold text-white truncate">${item.name}</h4>
-                        <span class="text-neonGreen text-sm">${item.price} ر.س</span>
+                        <span class="text-neonGreen font-pixel text-sm">${item.price} ر.س</span>
                     </div>
                 </div>
                 <button onclick="removeFromCart(${index})" class="text-red-500 hover:text-red-400 p-2 transition flex-shrink-0">
