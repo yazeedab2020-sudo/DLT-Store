@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تم الدفع بنجاح - DLT Store</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Changa:wght@300;400;500;700;800&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        darkBg: '#0B001A',
+                        cardBg: '#1A0B2E',
+                        neonGreen: '#00FFA3',
+                        neonPurple: '#D900FF',
+                        neonBlue: '#00F0FF',
+                        spaceBlue: '#2D1B69',
+                    },
+                    fontFamily: {
+                        sans: ['Changa', 'sans-serif'],
+                        pixel: ['Silkscreen', 'cursive'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Changa', sans-serif; }
+    </style>
+</head>
+<body class="bg-darkBg text-white flex flex-col min-h-screen">
+    <nav class="bg-cardBg/80 backdrop-blur-md sticky top-0 z-50 border-b border-white/10 shadow-[0_0_15px_rgba(188,19,254,0.3)]">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="text-xl md:text-2xl font-bold font-pixel text-neonPurple tracking-wider flex items-center gap-2">
+                <a href="index.html" class="flex items-center gap-2">
+                    <span class="text-2xl md:text-3xl">🪐</span> DLT <span class="text-neonBlue">STORE</span>
+                </a>
+            </div>
+            <div class="hidden md:flex space-x-6 space-x-reverse">
+                <a href="index.html" class="hover:text-neonPurple transition hover:shadow-[0_0_10px_rgba(217,0,255,0.5)]">الرئيسية</a>
+                <a href="pc-games.html" class="hover:text-neonPurple transition hover:shadow-[0_0_10px_rgba(217,0,255,0.5)]">ألعاب PC</a>
+                <a href="offline-games.html" class="hover:text-neonPurple transition hover:shadow-[0_0_10px_rgba(217,0,255,0.5)]">ألعاب أوفلاين</a>
+            </div>
+            <div class="flex items-center space-x-2 md:space-x-4 space-x-reverse">
+                <button class="hover:text-neonBlue transition transform hover:scale-110">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+                </button>
+                <div id="account-area" class="flex items-center"></div>
+                <a href="checkout.html" class="relative hover:text-neonBlue transition transform hover:scale-110">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+                    <span id="cart-count" class="absolute -top-2 -right-2 bg-neonBlue text-darkBg text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center shadow-[0_0_10px_#00F0FF] hidden">0</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="container mx-auto px-4 py-16 flex-grow">
+        <div class="max-w-lg mx-auto bg-cardBg/80 border border-white/10 rounded-2xl p-10 text-center shadow-[0_0_30px_rgba(57,255,20,0.1)]">
+            <div class="flex items-center justify-center mb-6">
+                <div class="relative">
+                    <div class="w-20 h-20 rounded-full bg-neonGreen/20 border border-neonGreen/40 flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-neonGreen" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17l-3.88-3.88a1 1 0 10-1.41 1.41l4.59 4.59a1 1 0 001.41 0l10-10a1 1 0 10-1.41-1.41L9 16.17z"/></svg>
+                    </div>
+                    <div class="absolute inset-0 rounded-full animate-ping bg-neonGreen/10"></div>
+                </div>
+            </div>
+            <h1 class="text-3xl font-bold font-pixel text-neonGreen mb-3">تم الدفع بنجاح</h1>
+            <p class="text-gray-300 mb-6">شكراً لك! تم معالجة طلبك بنجاح.</p>
+            <div class="flex items-center justify-center gap-3">
+                <a href="index.html" class="bg-neonPurple hover:bg-neonPurple/80 text-white px-4 py-2 rounded-lg font-bold transition">العودة للرئيسية</a>
+                <button id="download-invoice-btn" class="bg-white/5 hover:bg-white/10 text-white px-4 py-2 rounded-lg font-bold border border-white/10 transition">تحميل الفاتورة PDF</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="container mx-auto px-4 pb-16">
+        <div class="max-w-xl mx-auto bg-cardBg/80 border border-white/10 rounded-2xl p-6 shadow-[0_0_30px_rgba(0,240,255,0.1)]">
+            <h2 class="text-2xl font-bold text-neonBlue mb-4 font-pixel">بيانات المنتج الرقمي الخاص بك</h2>
+            <div class="flex items-center justify-between bg-black/20 p-4 rounded-lg border border-white/10">
+                <div class="flex items-center gap-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-neonGreen" viewBox="0 0 24 24" fill="currentColor"><path d="M5 4h14a1 1 0 011 1v14l-4-4H5a1 1 0 01-1-1V5a1 1 0 011-1z"/></svg>
+                    <span id="digital-code" class="font-mono tracking-wider text-neonGreen">DLT-9X3A-77QK-4M2Z</span>
+                </div>
+                <button id="copy-code-btn" class="bg-neonGreen/10 hover:bg-neonGreen/20 text-neonGreen px-3 py-2 rounded-lg font-bold border border-neonGreen/30 transition">نسخ الكود</button>
+            </div>
+            <p id="copy-msg" class="hidden mt-3 text-center text-sm text-neonGreen">تم نسخ الكود إلى الحافظة</p>
+        </div>
+    </section>
+
+    <footer class="bg-cardBg/50 pt-12 pb-8 border-t border-white/10 mt-12 backdrop-blur-sm">
+        <div class="container mx-auto px-4 text-center text-gray-600 text-sm">
+            <p>&copy; 2024 DLT Store. جميع الحقوق محفوظة.</p>
+        </div>
+    </footer>
+
+    <script src="auth.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const copyBtn = document.getElementById('copy-code-btn');
+            const codeEl = document.getElementById('digital-code');
+            const copyMsg = document.getElementById('copy-msg');
+            const invoiceBtn = document.getElementById('download-invoice-btn');
+            if (copyBtn && codeEl) {
+                copyBtn.addEventListener('click', async () => {
+                    const text = codeEl.textContent || '';
+                    try {
+                        await navigator.clipboard.writeText(text);
+                        if (copyMsg) {
+                            copyMsg.classList.remove('hidden');
+                            setTimeout(() => copyMsg.classList.add('hidden'), 1500);
+                        }
+                    } catch {}
+                });
+            }
+            if (invoiceBtn) {
+                invoiceBtn.addEventListener('click', () => {
+                    invoiceBtn.disabled = true;
+                    const prev = invoiceBtn.textContent;
+                    invoiceBtn.textContent = 'جاري التحميل...';
+                    setTimeout(() => {
+                        invoiceBtn.textContent = prev;
+                        invoiceBtn.disabled = false;
+                    }, 1200);
+                });
+            }
+        });
+    </script>
+    <script src="main.js"></script>
+</body>
+</html>

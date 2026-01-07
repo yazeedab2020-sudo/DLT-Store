@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ملفي الشخصي - DLT Store</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Changa:wght@300;400;500;700;800&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        darkBg: '#0B001A',
+                        cardBg: '#1A0B2E',
+                        neonGreen: '#00FFA3',
+                        neonPurple: '#D900FF',
+                        neonBlue: '#00F0FF',
+                        spaceBlue: '#2D1B69',
+                    },
+                    fontFamily: {
+                        sans: ['Changa', 'sans-serif'],
+                        pixel: ['Silkscreen', 'cursive'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Changa', sans-serif; }
+    </style>
+</head>
+<body class="bg-darkBg text-white flex flex-col min-h-screen">
+    <nav class="bg-cardBg/80 backdrop-blur-md sticky top-0 z-50 border-b border-white/10 shadow-[0_0_15px_rgba(188,19,254,0.3)]">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="text-xl md:text-2xl font-bold font-pixel text-neonPurple tracking-wider flex items-center gap-2">
+                <a href="index.html" class="flex items-center gap-2">
+                    <span class="text-2xl md:text-3xl">🪐</span> DLT <span class="text-neonBlue">STORE</span>
+                </a>
+            </div>
+            <div class="hidden md:flex space-x-6 space-x-reverse">
+                <a href="index.html" class="hover:text-neonPurple transition hover:shadow-[0_0_10px_rgba(217,0,255,0.5)]">الرئيسية</a>
+                <a href="pc-games.html" class="hover:text-neonPurple transition hover:shadow-[0_0_10px_rgba(217,0,255,0.5)]">ألعاب PC</a>
+                <a href="offline-games.html" class="hover:text-neonPurple transition hover:shadow-[0_0_10px_rgba(217,0,255,0.5)]">ألعاب أوفلاين</a>
+            </div>
+            <div class="flex items-center space-x-2 md:space-x-4 space-x-reverse">
+                <button class="hover:text-neonBlue transition transform hover:scale-110">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+                </button>
+                <div id="account-area" class="flex items-center"></div>
+                <a href="checkout.html" class="relative hover:text-neonBlue transition transform hover:scale-110">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+                    <span id="cart-count" class="absolute -top-2 -right-2 bg-neonBlue text-darkBg text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center shadow-[0_0_10px_#00F0FF] hidden">0</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="container mx-auto px-4 py-10 flex-grow">
+        <h1 class="text-3xl md:text-4xl font-bold font-pixel text-neonPurple mb-8">ملفي الشخصي</h1>
+
+        <div id="profile-content" class="space-y-8"></div>
+    </section>
+
+    <footer class="bg-cardBg/50 pt-12 pb-8 border-t border-white/10 mt-12 backdrop-blur-sm">
+        <div class="container mx-auto px-4 text-center text-gray-600 text-sm">
+            <p>&copy; 2024 DLT Store. جميع الحقوق محفوظة.</p>
+        </div>
+    </footer>
+
+    <script src="auth.js"></script>
+    <script>
+        const ORDERS_KEY = 'dlt_orders';
+        function getOrders() {
+            try {
+                const raw = localStorage.getItem(ORDERS_KEY);
+                return raw ? JSON.parse(raw) : [];
+            } catch {
+                return [];
+            }
+        }
+        function setOrders(orders) {
+            localStorage.setItem(ORDERS_KEY, JSON.stringify(orders));
+        }
+        function seedOrdersIfEmpty(user) {
+            const list = getOrders();
+            if (list.length) return;
+            const base = [
+                { id: 'ORD-1001', product: 'Cyberpunk 2077', price: 149.00, date: '2024-11-10', status: 'مكتمل' },
+                { id: 'ORD-1002', product: 'Elden Ring', price: 199.00, date: '2024-12-02', status: 'مُرسل' },
+                { id: 'ORD-1003', product: 'Red Dead Redemption 2', price: 179.00, date: '2025-01-05', status: 'قيد المعالجة' }
+            ];
+            const enriched = base.map(o => ({ ...o, email: user?.email || '' }));
+            setOrders(enriched);
+        }
+        function renderProfile() {
+            const container = document.getElementById('profile-content');
+            if (!container) return;
+            const user = getUser();
+            if (!user) {
+                container.innerHTML = `
+                    <div class="max-w-lg mx-auto bg-cardBg/80 border border-white/10 rounded-2xl p-8 text-center">
+                        <p class="text-gray-300 mb-4">يرجى تسجيل الدخول لعرض الملف الشخصي</p>
+                        <a href="login.html" class="inline-flex items-center gap-2 bg-neonGreen/10 text-neonGreen border border-neonGreen/30 px-4 py-2 rounded-lg hover:bg-neonGreen/20 transition">تسجيل الدخول</a>
+                    </div>
+                `;
+                return;
+            }
+            seedOrdersIfEmpty(user);
+            const orders = getOrders().filter(o => !user.email || o.email === user.email);
+            const initial = user.name && user.name.length ? user.name[0] : '👤';
+            const headerHtml = `
+                <div class="max-w-3xl mx-auto bg-cardBg/80 border border-white/10 rounded-2xl p-6 shadow-[0_0_30px_rgba(0,240,255,0.1)]">
+                    <div class="flex items-center gap-4">
+                        <span class="inline-flex items-center justify-center w-14 h-14 rounded-full bg-white/10 border border-white/10 text-white text-xl">${initial}</span>
+                        <div>
+                            <div class="text-xl font-bold">${user.name}</div>
+                            <div class="text-gray-400 text-sm">${user.email || ''}</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            const ordersHtml = `
+                <div class="max-w-3xl mx-auto mt-6">
+                    <h2 class="text-2xl font-bold text-neonGreen mb-4 font-pixel">طلباتي</h2>
+                    <div class="grid grid-cols-1 gap-4">
+                        ${orders.length ? orders.map(o => {
+                            const badgeClass =
+                                o.status === 'قيد الانتظار' ? 'bg-yellow-500/20 text-yellow-300' :
+                                o.status === 'قيد المعالجة' ? 'bg-blue-500/20 text-blue-300' :
+                                o.status === 'مُرسل' ? 'bg-neonPurple/20 text-neonPurple' :
+                                'bg-green-500/20 text-green-300';
+                            return `
+                                <div class="bg-cardBg/80 border border-white/10 rounded-xl p-4 flex items-center justify-between">
+                                    <div>
+                                        <div class="font-bold">${o.product}</div>
+                                        <div class="text-gray-400 text-sm">${o.id} • ${o.date}</div>
+                                    </div>
+                                    <div class="flex items-center gap-3">
+                                        <span class="px-2 py-1 rounded ${badgeClass} text-xs font-bold">${o.status}</span>
+                                        <span class="text-neonGreen font-bold">${Number(o.price).toFixed(2)} ر.س</span>
+                                    </div>
+                                </div>
+                            `;
+                        }).join('') : `
+                            <div class="bg-cardBg/80 border border-white/10 rounded-xl p-6 text-center text-gray-400">لا توجد طلبات حتى الآن</div>
+                        `}
+                    </div>
+                </div>
+            `;
+            container.innerHTML = headerHtml + ordersHtml;
+        }
+        document.addEventListener('DOMContentLoaded', renderProfile);
+    </script>
+    <script src="main.js"></script>
+</body>
+</html>

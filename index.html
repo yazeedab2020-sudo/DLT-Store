@@ -66,7 +66,8 @@
                 <button class="hover:text-neonBlue transition transform hover:scale-110">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
                 </button>
-                <a href="cart.html" class="relative hover:text-neonBlue transition transform hover:scale-110">
+                <div id="account-area" class="flex items-center"></div>
+                <a href="checkout.html" class="relative hover:text-neonBlue transition transform hover:scale-110">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
                     <span id="cart-count" class="absolute -top-2 -right-2 bg-neonBlue text-darkBg text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center shadow-[0_0_10px_#00F0FF] hidden">0</span>
                 </a>
@@ -102,7 +103,7 @@
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 15l-3-3m0 0l3-3m-3 3h8M3 12a9 9 0 1118 0 9 9 0 01-18 0z" /></svg>
                 ألعاب أوفلاين
             </a>
-            <a href="cart.html" class="block w-full py-4 px-6 text-right text-neonBlue text-lg font-bold border-b border-white/10 hover:bg-white/5 hover:text-white transition flex items-center gap-3">
+            <a href="checkout.html" class="block w-full py-4 px-6 text-right text-neonBlue text-lg font-bold border-b border-white/10 hover:bg-white/5 hover:text-white transition flex items-center gap-3">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
                 سلة التسوق
             </a>
@@ -351,6 +352,56 @@
 
     <!-- Cart Logic -->
     <script src="cart.js"></script>
+    <script src="auth.js"></script>
+    <script>
+        function getAdminProducts() {
+            try {
+                const raw = localStorage.getItem('dlt_products');
+                return raw ? JSON.parse(raw) : [];
+            } catch { return []; }
+        }
+        function buildCard(p) {
+            return `
+            <div class="bg-cardBg rounded-xl overflow-hidden border border-white/5 hover:border-neonPurple/50 transition duration-300 group shadow-lg hover:shadow-neonPurple/20 flex flex-col h-full">
+                <div class="relative">
+                    <a href="product-details.html?id=${p.id}">
+                        <img src="${p.imageUrl || ''}" alt="${p.name}" class="w-full h-32 sm:h-48 object-cover group-hover:scale-110 transition duration-500">
+                    </a>
+                </div>
+                <div class="p-3 flex flex-col flex-grow">
+                    <a href="product-details.html?id=${p.id}">
+                        <h3 class="font-bold text-sm sm:text-lg mb-1 truncate text-white group-hover:text-neonPurple transition">${p.name}</h3>
+                    </a>
+                    <div class="flex gap-1 flex-wrap mb-2">
+                        ${(Array.isArray(p.badges) ? p.badges : []).map(b => `
+                            <span class="bg-red-600 text-white text-[10px] font-bold px-2 py-0.5 rounded">${b}</span>
+                        `).join('')}
+                    </div>
+                    <div class="mt-auto">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-neonGreen font-bold font-pixel text-sm sm:text-xl drop-shadow-[0_0_5px_rgba(57,255,20,0.5)]">${Number(p.price).toFixed(2)} ر.س</span>
+                        </div>
+                        <button class="add-to-cart-btn w-full border border-neonPurple text-neonPurple hover:bg-neonPurple hover:text-white transition py-1.5 rounded-lg text-xs sm:text-sm font-bold flex items-center justify-center gap-2" data-name="${p.name}" data-price="${Number(p.price).toFixed(2)}" data-image="${p.imageUrl || ''}">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" /></svg>
+                            إضافة للسلة
+                        </button>
+                    </div>
+                </div>
+            </div>`;
+        }
+        document.addEventListener('DOMContentLoaded', () => {
+            const grid = document.querySelector('section#products .grid');
+            if (!grid) return;
+            const list = getAdminProducts()
+                .filter(p => p.status === 'نشط' && (p.stock || 0) > 0)
+                .sort((a,b) => (b.createdAt||0) - (a.createdAt||0));
+            if (!list.length) return;
+            const html = list.map(buildCard).join('');
+            const wrapper = document.createElement('div');
+            wrapper.innerHTML = html;
+            Array.from(wrapper.children).forEach(child => grid.appendChild(child));
+        });
+    </script>
     <script src="main.js"></script>
 </body>
 </html>

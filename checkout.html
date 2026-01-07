@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إتمام الشراء - DLT Store</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Changa:wght@300;400;500;700;800&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        darkBg: '#0B001A',
+                        cardBg: '#1A0B2E',
+                        neonGreen: '#00FFA3',
+                        neonPurple: '#D900FF',
+                        neonBlue: '#00F0FF',
+                        spaceBlue: '#2D1B69',
+                    },
+                    fontFamily: {
+                        sans: ['Changa', 'sans-serif'],
+                        pixel: ['Silkscreen', 'cursive'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Changa', sans-serif; }
+    </style>
+</head>
+<body class="bg-darkBg text-white flex flex-col min-h-screen">
+    <nav class="bg-cardBg/80 backdrop-blur-md sticky top-0 z-50 border-b border-white/10 shadow-[0_0_15px_rgba(188,19,254,0.3)]">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="text-xl md:text-2xl font-bold font-pixel text-neonPurple tracking-wider flex items-center gap-2">
+                <a href="index.html" class="flex items-center gap-2">
+                    <span class="text-2xl md:text-3xl">🪐</span> DLT <span class="text-neonBlue">STORE</span>
+                </a>
+            </div>
+            <div class="hidden md:flex space-x-6 space-x-reverse">
+                <a href="index.html" class="hover:text-neonPurple transition hover:shadow-[0_0_10px_rgba(217,0,255,0.5)]">الرئيسية</a>
+                <a href="pc-games.html" class="hover:text-neonPurple transition hover:shadow-[0_0_10px_rgba(217,0,255,0.5)]">ألعاب PC</a>
+                <a href="offline-games.html" class="hover:text-neonPurple transition hover:shadow-[0_0_10px_rgba(217,0,255,0.5)]">ألعاب أوفلاين</a>
+            </div>
+            <div class="flex items-center space-x-2 md:space-x-4 space-x-reverse">
+                <button class="hover:text-neonBlue transition transform hover:scale-110">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+                </button>
+                <div id="account-area" class="flex items-center"></div>
+                <a href="checkout.html" class="relative hover:text-neonBlue transition transform hover:scale-110">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+                    <span id="cart-count" class="absolute -top-2 -right-2 bg-neonBlue text-darkBg text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center shadow-[0_0_10px_#00F0FF] hidden">0</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="container mx-auto px-4 py-10 flex-grow">
+        <h1 class="text-3xl md:text-4xl font-bold font-pixel text-neonPurple mb-8">إتمام الشراء</h1>
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div class="lg:col-span-2 space-y-6">
+                <div class="bg-cardBg/80 border border-white/10 rounded-2xl p-6 shadow-[0_0_30px_rgba(217,0,255,0.1)]">
+                    <h2 class="text-2xl font-bold text-neonGreen mb-4 font-pixel">ملخص السلة</h2>
+                    <div id="checkout-items" class="space-y-4"></div>
+                    <div class="flex items-center justify-between mt-4 pt-4 border-t border-white/10">
+                        <span class="text-gray-300">الإجمالي</span>
+                        <span id="checkout-total" class="text-neonGreen font-bold">0 ر.س</span>
+                    </div>
+                </div>
+                <div class="bg-cardBg/80 border border-white/10 rounded-2xl p-6 shadow-[0_0_30px_rgba(0,240,255,0.1)]">
+                    <h2 class="text-2xl font-bold text-neonBlue mb-4 font-pixel">طرق الدفع</h2>
+                    <div class="grid grid-cols-3 gap-3">
+                        <button data-method="apple" class="pay-method bg-white/5 hover:bg-white/10 text-white px-4 py-3 rounded-lg border border-white/10 transition font-bold">Apple Pay</button>
+                        <button data-method="mada" class="pay-method bg-white/5 hover:bg-white/10 text-white px-4 py-3 rounded-lg border border-white/10 transition font-bold">بطاقة مدى</button>
+                        <button data-method="visa" class="pay-method bg-white/5 hover:bg-white/10 text-white px-4 py-3 rounded-lg border border-white/10 transition font-bold">Visa</button>
+                    </div>
+                    <p id="method-hint" class="text-gray-400 text-sm mt-3">اختر طريقة الدفع للاستمرار</p>
+                </div>
+            </div>
+            <div class="space-y-6">
+                <div class="bg-cardBg/80 border border-white/10 rounded-2xl p-6 shadow-[0_0_30px_rgba(57,255,20,0.1)]">
+                    <h2 class="text-2xl font-bold text-neonGreen mb-4 font-pixel">بيانات التواصل</h2>
+                    <div class="space-y-3">
+                        <input id="cust-name" type="text" placeholder="الاسم الكامل" class="w-full bg-black/30 border border-white/10 rounded-lg px-3 py-2 text-white placeholder-gray-400 focus:outline-none focus:border-neonPurple">
+                        <input id="cust-email" type="email" placeholder="البريد الإلكتروني" class="w-full bg-black/30 border border-white/10 rounded-lg px-3 py-2 text-white placeholder-gray-400 focus:outline-none focus:border-neonPurple">
+                        <input id="cust-phone" type="tel" placeholder="رقم الجوال" class="w-full bg-black/30 border border-white/10 rounded-lg px-3 py-2 text-white placeholder-gray-400 focus:outline-none focus:border-neonPurple">
+                    </div>
+                    <button id="pay-btn" class="mt-4 w-full bg-neonPurple hover:bg-neonPurple/80 text-white font-bold py-3 rounded-lg transition flex items-center justify-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M12 5l7 7-7 7" /></svg>
+                        إتمام الدفع
+                    </button>
+                    <div id="loading" class="hidden mt-3 text-center">
+                        <div class="inline-flex items-center gap-2 text-gray-300">
+                            <svg class="animate-spin h-5 w-5 text-neonPurple" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path></svg>
+                            جاري معالجة الدفع...
+                        </div>
+                    </div>
+                    <p id="form-error" class="hidden mt-3 text-red-400 text-sm">يرجى تعبئة البيانات واختيار طريقة الدفع</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-cardBg/50 pt-12 pb-8 border-t border-white/10 mt-12 backdrop-blur-sm">
+        <div class="container mx-auto px-4 text-center text-gray-600 text-sm">
+            <p>&copy; 2024 DLT Store. جميع الحقوق محفوظة.</p>
+        </div>
+    </footer>
+
+    <script src="cart.js"></script>
+    <script src="auth.js"></script>
+    <script>
+        let selectedMethod = '';
+        function groupCart(cart) {
+            const map = new Map();
+            cart.forEach(item => {
+                const key = `${item.name}|${item.price}|${item.image}`;
+                const exist = map.get(key);
+                if (exist) {
+                    exist.qty += 1;
+                } else {
+                    map.set(key, { name: item.name, price: item.price, image: item.image, qty: 1 });
+                }
+            });
+            return Array.from(map.values());
+        }
+        function renderCheckout() {
+            const container = document.getElementById('checkout-items');
+            const totalEl = document.getElementById('checkout-total');
+            if (!container || !totalEl) return;
+            const cart = getCart();
+            const groups = groupCart(cart);
+            if (!groups.length) {
+                container.innerHTML = '<div class="text-gray-400">لا توجد منتجات في السلة</div>';
+                totalEl.innerText = '0 ر.س';
+                return;
+            }
+            let total = 0;
+            container.innerHTML = groups.map(g => {
+                const lineTotal = g.price * g.qty;
+                total += lineTotal;
+                return `
+                    <div class="flex items-center justify-between bg-black/20 p-4 rounded-lg border border-white/5">
+                        <div class="flex items-center gap-4 min-w-0 flex-1">
+                            <img src="${g.image}" alt="${g.name}" class="w-16 h-16 object-cover rounded-md flex-shrink-0">
+                            <div class="min-w-0">
+                                <h4 class="font-bold text-white truncate">${g.name}</h4>
+                                <div class="text-gray-400 text-sm">السعر: <span class="text-neonGreen">${g.price} ر.س</span> • الكمية: <span class="text-neonBlue">${g.qty}</span></div>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <div class="text-neonGreen font-bold">${lineTotal.toFixed(2)} ر.س</div>
+                            <button onclick="removeOneByKey('${g.name}', ${g.price}, '${g.image}')" class="bg-white/5 hover:bg-white/10 text-white px-3 py-1 rounded border border-white/10 text-sm">حذف عنصر</button>
+                            <button onclick="removeAllByKey('${g.name}', ${g.price}, '${g.image}')" class="bg-red-600/20 hover:bg-red-600/30 text-red-300 px-3 py-1 rounded border border-red-600/30 text-sm">حذف الكل</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            totalEl.innerText = total.toFixed(2) + ' ر.س';
+        }
+        function attachPaymentButtons() {
+            document.querySelectorAll('.pay-method').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.pay-method').forEach(b => b.classList.remove('ring-2','ring-neonPurple','ring-offset-2','ring-offset-darkBg'));
+                    btn.classList.add('ring-2','ring-neonPurple','ring-offset-2','ring-offset-darkBg');
+                    selectedMethod = btn.getAttribute('data-method') || '';
+                    const hint = document.getElementById('method-hint');
+                    if (hint) hint.textContent = selectedMethod ? 'طريقة الدفع المحددة: ' + selectedMethod : 'اختر طريقة الدفع للاستمرار';
+                });
+            });
+        }
+        function attachPayAction() {
+            const payBtn = document.getElementById('pay-btn');
+            const loading = document.getElementById('loading');
+            const errorEl = document.getElementById('form-error');
+            const nameEl = document.getElementById('cust-name');
+            const emailEl = document.getElementById('cust-email');
+            const phoneEl = document.getElementById('cust-phone');
+            if (!payBtn) return;
+            payBtn.addEventListener('click', () => {
+                const name = nameEl?.value.trim();
+                const email = emailEl?.value.trim();
+                const phone = phoneEl?.value.trim();
+                const cart = getCart();
+                const valid = name && email && phone && selectedMethod && cart.length;
+                if (!valid) {
+                    errorEl?.classList.remove('hidden');
+                    return;
+                }
+                errorEl?.classList.add('hidden');
+                payBtn.disabled = true;
+                loading?.classList.remove('hidden');
+                setTimeout(() => {
+                    window.location.href = 'success.html';
+                }, 1500);
+            });
+        }
+        document.addEventListener('DOMContentLoaded', () => {
+            renderCheckout();
+            attachPaymentButtons();
+            attachPayAction();
+        });
+    </script>
+    <script src="main.js"></script>
+</body>
+</html>

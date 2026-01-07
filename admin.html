@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة التحكم - DLT Store</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Changa:wght@300;400;500;700;800&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        darkBg: '#0B001A',
+                        cardBg: '#1A0B2E',
+                        neonGreen: '#00FFA3',
+                        neonPurple: '#D900FF',
+                        neonBlue: '#00F0FF',
+                        spaceBlue: '#2D1B69',
+                    },
+                    fontFamily: {
+                        sans: ['Changa', 'sans-serif'],
+                        pixel: ['Silkscreen', 'cursive'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Changa', sans-serif; }
+    </style>
+    <meta name="robots" content="noindex,nofollow">
+</head>
+<body class="bg-darkBg text-white flex flex-col min-h-screen">
+    <nav class="bg-cardBg/80 backdrop-blur-md sticky top-0 z-50 border-b border-white/10 shadow-[0_0_15px_rgba(188,19,254,0.3)]">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="text-xl md:text-2xl font-bold font-pixel text-neonPurple tracking-wider flex items-center gap-2">
+                <a href="index.html" class="flex items-center gap-2">
+                    <span class="text-2xl md:text-3xl">🪐</span> DLT <span class="text-neonBlue">STORE</span>
+                </a>
+            </div>
+            <div class="hidden md:flex space-x-6 space-x-reverse">
+                <a href="index.html" class="hover:text-neonPurple transition hover:shadow-[0_0_10px_rgba(217,0,255,0.5)]">الرئيسية</a>
+                <a href="pc-games.html" class="hover:text-neonPurple transition hover:shadow-[0_0_10px_rgba(217,0,255,0.5)]">ألعاب PC</a>
+                <a href="offline-games.html" class="hover:text-neonPurple transition hover:shadow-[0_0_10px_rgba(217,0,255,0.5)]">ألعاب أوفلاين</a>
+            </div>
+            <div class="flex items-center space-x-2 md:space-x-4 space-x-reverse">
+                <button class="hover:text-neonBlue transition transform hover:scale-110">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+                </button>
+                <div id="account-area" class="flex items-center"></div>
+                <a href="checkout.html" class="relative hover:text-neonBlue transition transform hover:scale-110">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+                    <span id="cart-count" class="absolute -top-2 -right-2 bg-neonBlue text-darkBg text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center shadow-[0_0_10px_#00F0FF] hidden">0</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="container mx-auto px-4 py-10 flex-grow">
+        <h1 class="text-3xl md:text-4xl font-bold font-pixel text-neonPurple mb-8">لوحة التحكم</h1>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div class="bg-cardBg/80 border border-white/10 rounded-2xl p-6 shadow-[0_0_30px_rgba(217,0,255,0.1)]">
+                <h2 class="text-2xl font-bold text-neonGreen mb-4 font-pixel">إضافة منتج جديد</h2>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm text-gray-300 mb-1">اسم المنتج</label>
+                        <input id="prod-name" type="text" class="w-full bg-black/30 border border-white/10 rounded-lg px-3 py-2 text-white placeholder-gray-400 focus:outline-none focus:border-neonPurple" placeholder="اكتب الاسم">
+                    </div>
+                    <div>
+                        <label class="block text-sm text-gray-300 mb-1">القسم</label>
+                        <select id="prod-category" class="w-full bg-black/30 border border-white/10 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-neonPurple">
+                            <option value="ألعاب PC">ألعاب PC</option>
+                            <option value="ألعاب أوفلاين">ألعاب أوفلاين</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm text-gray-300 mb-1">التاقات</label>
+                        <select id="prod-tags" multiple class="w-full bg-black/30 border border-white/10 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-neonPurple">
+                            <option value="جديد">جديد</option>
+                            <option value="HOT">HOT</option>
+                            <option value="أوفلاين">أوفلاين</option>
+                        </select>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm text-gray-300 mb-1">السعر</label>
+                            <input id="prod-price" type="number" min="0" step="0.01" class="w-full bg-black/30 border border-white/10 rounded-lg px-3 py-2 text-white placeholder-gray-400 focus:outline-none focus:border-neonPurple" placeholder="بالريال">
+                        </div>
+                        <div>
+                            <label class="block text-sm text-gray-300 mb-1">الصورة</label>
+                            <input id="prod-image" type="file" accept="image/*" class="w-full bg-black/30 border border-white/10 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-neonPurple">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm text-gray-300 mb-1">وصف مختصر</label>
+                        <textarea id="prod-desc" rows="2" class="w-full bg-black/30 border border-white/10 rounded-lg px-3 py-2 text-white placeholder-gray-400 focus:outline-none focus:border-neonPurple" placeholder="وصف سريع"></textarea>
+                    </div>
+                    <div>
+                        <label class="block text-sm text-gray-300 mb-1">ميزات المنتج</label>
+                        <div class="flex gap-2">
+                            <input id="feature-input" type="text" class="flex-1 bg-black/30 border border-white/10 rounded-lg px-3 py-2 text-white placeholder-gray-400 focus:outline-none focus:border-neonPurple" placeholder="اكتب ميزة">
+                            <button id="add-feature-btn" type="button" class="bg-neonBlue/20 hover:bg-neonBlue/30 text-white font-bold px-4 rounded-lg border border-neonBlue/30 transition">إضافة ميزة</button>
+                        </div>
+                        <div id="features-list" class="mt-3 flex flex-wrap gap-2"></div>
+                    </div>
+                    <div>
+                        <label class="block text-sm text-gray-300 mb-1">قائمة الأكواد</label>
+                        <textarea id="prod-content" rows="6" class="w-full bg-black/30 border border-white/10 rounded-lg px-3 py-2 text-white placeholder-gray-400 focus:outline-none focus:border-neonPurple" placeholder="كل كود في سطر"></textarea>
+                        <div class="mt-2 text-sm text-gray-300">الكمية المتاحة: <span id="stock-count" class="font-bold text-neonGreen">0</span></div>
+                    </div>
+                    <button id="add-product-btn" class="w-full bg-neonPurple hover:bg-neonPurple/80 text-white font-bold py-3 rounded-lg transition flex items-center justify-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
+                        إضافة
+                    </button>
+                    <p id="prod-error" class="hidden mt-3 text-red-400 text-sm">يرجى إدخال الاسم والسعر بشكل صحيح</p>
+                </div>
+            </div>
+
+            <div class="bg-cardBg/80 border border-white/10 rounded-2xl p-6 shadow-[0_0_30px_rgba(0,240,255,0.1)]">
+                <h2 class="text-2xl font-bold text-neonBlue mb-4 font-pixel">إدارة الطلبات</h2>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full text-sm">
+                        <thead>
+                            <tr class="text-left">
+                                <th class="px-3 py-2">العميل</th>
+                                <th class="px-3 py-2">الحالة</th>
+                                <th class="px-3 py-2">إجراء</th>
+                            </tr>
+                        </thead>
+                        <tbody id="orders-tbody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-cardBg/80 border border-white/10 rounded-2xl p-6 shadow-[0_0_30px_rgba(57,255,20,0.1)] mt-6">
+            <h2 class="text-2xl font-bold text-neonGreen mb-4 font-pixel">المنتجات المضافة</h2>
+            <div class="overflow-x-auto">
+                <table class="min-w-full text-sm">
+                    <thead>
+                        <tr class="text-left">
+                            <th class="px-3 py-2">الصورة</th>
+                            <th class="px-3 py-2">الاسم</th>
+                            <th class="px-3 py-2">السعر</th>
+                            <th class="px-3 py-2">القسم</th>
+                            <th class="px-3 py-2">المخزون</th>
+                            <th class="px-3 py-2">الحالة</th>
+                            <th class="px-3 py-2">إجراء</th>
+                        </tr>
+                    </thead>
+                    <tbody id="products-tbody"></tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-cardBg/50 pt-12 pb-8 border-t border-white/10 mt-12 backdrop-blur-sm">
+        <div class="container mx-auto px-4 text-center text-gray-600 text-sm">
+            <p>&copy; 2024 DLT Store. جميع الحقوق محفوظة.</p>
+        </div>
+    </footer>
+
+    <script src="auth.js"></script>
+    <script>
+        const STORAGE_KEY = 'dlt_products';
+        function getProducts() {
+            return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+        }
+        function setProducts(list) {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+        }
+        let products = Array.isArray(getProducts()) ? getProducts() : [];
+        const statusCycle = ['قيد الانتظار','قيد المعالجة','مُرسل','مكتمل'];
+        const orders = [
+            { customer: 'أحمد', status: 'قيد الانتظار' },
+            { customer: 'سارة', status: 'قيد المعالجة' },
+            { customer: 'محمد', status: 'مُرسل' }
+        ];
+        function renderProducts() {
+            const tbody = document.getElementById('products-tbody');
+            if (!tbody) return;
+            tbody.innerHTML = products.map((p, i) => {
+                const badge =
+                    p.status === 'نفدت الكمية' ? 'bg-red-500/20 text-red-300' :
+                    p.status === 'غير نشط' ? 'bg-yellow-500/20 text-yellow-300' :
+                    'bg-green-500/20 text-green-300';
+                return `
+                <tr class="border-t border-white/10">
+                    <td class="px-3 py-2">
+                        ${p.imageUrl ? `<img src="${p.imageUrl}" alt="${p.name}" class="w-12 h-12 object-cover rounded-lg border border-white/10">` : `<span class="text-gray-400">لا يوجد</span>`}
+                    </td>
+                    <td class="px-3 py-2">${p.name}</td>
+                    <td class="px-3 py-2">${Number(p.price).toFixed(2)} ر.س</td>
+                    <td class="px-3 py-2">${p.category || '-'}</td>
+                    <td class="px-3 py-2">${p.stock || 0}</td>
+                    <td class="px-3 py-2"><span class="px-2 py-1 rounded ${badge} text-xs font-bold">${p.status}</span></td>
+                    <td class="px-3 py-2 space-x-2 space-x-reverse">
+                        <button data-index="${i}" class="toggle-status bg-white/5 hover:bg-white/10 text-white px-3 py-1 rounded border border-white/10 transition">تبديل الحالة</button>
+                        <button data-index="${i}" class="mock-sell bg-neonPurple/20 hover:bg-neonPurple/30 text-white px-3 py-1 rounded border border-neonPurple/30 transition">بيع وهمي</button>
+                        <button data-index="${i}" class="delete-product bg-red-600/20 hover:bg-red-600/30 text-red-300 px-3 py-1 rounded border border-red-600/30 transition">حذف</button>
+                    </td>
+                </tr>`;
+            }).join('');
+            document.querySelectorAll('.toggle-status').forEach(btn => {
+                btn.addEventListener('click', e => {
+                    const idx = Number(e.currentTarget.getAttribute('data-index'));
+                    const p = products[idx];
+                    if ((p.stock || 0) === 0) {
+                        p.status = 'نفدت الكمية';
+                    } else {
+                        p.status = p.status === 'نشط' ? 'غير نشط' : 'نشط';
+                    }
+                    setProducts(products);
+                    renderProducts();
+                });
+            });
+            document.querySelectorAll('.mock-sell').forEach(btn => {
+                btn.addEventListener('click', e => {
+                    const idx = Number(e.currentTarget.getAttribute('data-index'));
+                    const p = products[idx];
+                    if (!p.codes || p.codes.length === 0) return;
+                    p.codes.shift();
+                    p.stock = p.codes.length;
+                    if (p.stock === 0) p.status = 'نفدت الكمية';
+                    setProducts(products);
+                    renderProducts();
+                });
+            });
+            document.querySelectorAll('.delete-product').forEach(btn => {
+                btn.addEventListener('click', e => {
+                    const idx = Number(e.currentTarget.getAttribute('data-index'));
+                    const p = products[idx];
+                    const ok = window.confirm(`هل تريد حذف المنتج "${p?.name || ''}"؟`);
+                    if (!ok) return;
+                    products.splice(idx, 1);
+                    setProducts(products);
+                    renderProducts();
+                });
+            });
+        }
+        function renderOrders() {
+            const tbody = document.getElementById('orders-tbody');
+            if (!tbody) return;
+            tbody.innerHTML = orders.map((o, i) => {
+                const badgeClass =
+                    o.status === 'قيد الانتظار' ? 'bg-yellow-500/20 text-yellow-300' :
+                    o.status === 'قيد المعالجة' ? 'bg-blue-500/20 text-blue-300' :
+                    o.status === 'مُرسل' ? 'bg-neonPurple/20 text-neonPurple' :
+                    'bg-green-500/20 text-green-300';
+                return `
+                    <tr class="border-t border-white/10">
+                        <td class="px-3 py-2">${o.customer}</td>
+                        <td class="px-3 py-2"><span class="px-2 py-1 rounded ${badgeClass} text-xs font-bold">${o.status}</span></td>
+                        <td class="px-3 py-2">
+                            <button data-index="${i}" class="change-status bg-white/5 hover:bg-white/10 text-white px-3 py-1 rounded border border-white/10 transition">تغيير الحالة</button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+            document.querySelectorAll('.change-status').forEach(btn => {
+                btn.addEventListener('click', e => {
+                    const idx = Number(e.currentTarget.getAttribute('data-index'));
+                    const current = orders[idx].status;
+                    const next = statusCycle[(statusCycle.indexOf(current) + 1) % statusCycle.length];
+                    orders[idx].status = next;
+                    renderOrders();
+                });
+            });
+        }
+        document.addEventListener('DOMContentLoaded', () => {
+            const addBtn = document.getElementById('add-product-btn');
+            const nameEl = document.getElementById('prod-name');
+            const priceEl = document.getElementById('prod-price');
+            const descEl = document.getElementById('prod-desc');
+            const contentEl = document.getElementById('prod-content');
+            const imageEl = document.getElementById('prod-image');
+            const categoryEl = document.getElementById('prod-category');
+            const tagsEl = document.getElementById('prod-tags');
+            const stockCountEl = document.getElementById('stock-count');
+            const errorEl = document.getElementById('prod-error');
+            const featureInputEl = document.getElementById('feature-input');
+            const addFeatureBtn = document.getElementById('add-feature-btn');
+            const featuresListEl = document.getElementById('features-list');
+            let features = [];
+            function slugify(text) {
+                return text.toString().trim().toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9\-ء-ي]+/g, '').replace(/\-+/g, '-');
+            }
+            function parseCodes(text) {
+                return text.split('\n').map(s => s.trim()).filter(s => s.length > 0);
+            }
+            function readFileAsDataUrl(file) {
+                return new Promise(resolve => {
+                    if (!file) { resolve(''); return; }
+                    const reader = new FileReader();
+                    reader.onload = () => resolve(reader.result);
+                    reader.readAsDataURL(file);
+                });
+            }
+            function renderFeatures() {
+                if (!featuresListEl) return;
+                featuresListEl.innerHTML = features.map((f, i) => `
+                    <span class="flex items-center gap-2 bg-white/5 text-gray-200 px-3 py-1 rounded-lg border border-white/10">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-neonGreen" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                        <span class="text-sm">${f}</span>
+                        <button type="button" data-index="${i}" class="remove-feature ml-2 bg-red-600/20 hover:bg-red-600/30 text-red-300 px-2 rounded border border-red-600/30 text-xs">حذف</button>
+                    </span>
+                `).join('');
+                Array.from(featuresListEl.querySelectorAll('.remove-feature')).forEach(btn => {
+                    btn.addEventListener('click', e => {
+                        const idx = Number(e.currentTarget.getAttribute('data-index'));
+                        features.splice(idx, 1);
+                        renderFeatures();
+                    });
+                });
+            }
+            if (addFeatureBtn && featureInputEl) {
+                addFeatureBtn.addEventListener('click', () => {
+                    const val = featureInputEl.value.trim();
+                    if (!val) return;
+                    features.push(val);
+                    featureInputEl.value = '';
+                    renderFeatures();
+                });
+                featureInputEl.addEventListener('keydown', e => {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        addFeatureBtn.click();
+                    }
+                });
+            }
+            if (contentEl && stockCountEl) {
+                contentEl.addEventListener('input', () => {
+                    stockCountEl.textContent = parseCodes(contentEl.value).length;
+                });
+            }
+            if (categoryEl && tagsEl) {
+                categoryEl.addEventListener('change', () => {
+                    const offlineOpt = Array.from(tagsEl.options).find(o => o.value === 'أوفلاين');
+                    if (!offlineOpt) return;
+                    if (categoryEl.value === 'ألعاب أوفلاين') {
+                        offlineOpt.selected = true;
+                    } else {
+                        offlineOpt.selected = false;
+                    }
+                });
+            }
+            if (addBtn) {
+                addBtn.addEventListener('click', async () => {
+                    const name = nameEl ? nameEl.value.trim() : '';
+                    const price = priceEl ? priceEl.value : '';
+                    const desc = descEl ? descEl.value.trim() : '';
+                    const codesText = contentEl ? contentEl.value.trim() : '';
+                    const codes = parseCodes(codesText);
+                    const stock = codes.length;
+                    const category = categoryEl ? categoryEl.value : '';
+                    const file = imageEl && imageEl.files && imageEl.files[0] ? imageEl.files[0] : null;
+                    const priceNum = Number(price);
+                    if (!name || isNaN(priceNum)) {
+                        if (errorEl) errorEl.classList.remove('hidden');
+                        return;
+                    }
+                    if (errorEl) errorEl.classList.add('hidden');
+                    const imageUrl = await readFileAsDataUrl(file);
+                    const id = slugify(name);
+                    const status = stock > 0 ? 'نشط' : 'نفدت الكمية';
+                    const createdAt = Date.now();
+                    const badges = tagsEl ? Array.from(tagsEl.selectedOptions).map(o => o.value) : [];
+                    const p = { id, name, price: priceNum, desc, imageUrl, category, codes, stock, status, createdAt, badges, features };
+                    products.push(p);
+                    setProducts(products);
+                    if (nameEl) nameEl.value = '';
+                    if (priceEl) priceEl.value = '';
+                    if (descEl) descEl.value = '';
+                    if (contentEl) contentEl.value = '';
+                    if (imageEl) imageEl.value = '';
+                    if (stockCountEl) stockCountEl.textContent = '0';
+                    if (tagsEl) Array.from(tagsEl.options).forEach(o => o.selected = false);
+                    features = [];
+                    renderFeatures();
+                    renderProducts();
+                });
+            }
+            renderProducts();
+            renderOrders();
+        });
+    </script>
+    <script src="main.js"></script>
+</body>
+</html>

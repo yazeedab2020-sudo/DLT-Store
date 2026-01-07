@@ -1,37 +1,37 @@
 // cart.js
 
-// تهيئة السلة عند تحميل الصفحة
 document.addEventListener('DOMContentLoaded', () => {
     updateCartCount();
-    
-    // إذا كنا في صفحة السلة، قم بعرض المنتجات
     if (window.location.pathname.includes('cart.html')) {
         renderCartItems();
     }
-
-    // إضافة مستمعي الأحداث لأزرار "إضافة للسلة"
-    const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
-    addToCartButtons.forEach(button => {
-        button.addEventListener('click', (e) => {
-            const productCard = e.target.closest('.group') || e.target.closest('.bg-cardBg');
-            
-            if (productCard) {
-                const name = productCard.querySelector('h3').innerText;
-                const priceText = productCard.querySelector('.text-neonGreen').innerText;
-                const price = parseFloat(priceText.replace(' ر.س', '').trim());
-                const image = productCard.querySelector('img').src;
-                
-                const product = {
-                    id: Date.now(), // معرف فريد بسيط
-                    name: name,
-                    price: price,
-                    image: image
-                };
-
-                addToCart(product);
-            }
-        });
-    });
+});
+document.addEventListener('click', (e) => {
+    const btn = e.target.closest('.add-to-cart-btn');
+    if (!btn) return;
+    const datasetName = btn.getAttribute('data-name');
+    const datasetPrice = btn.getAttribute('data-price');
+    const datasetImage = btn.getAttribute('data-image');
+    let product = null;
+    if (datasetName && datasetPrice) {
+        product = {
+            name: datasetName,
+            price: parseFloat(datasetPrice),
+            image: datasetImage || ''
+        };
+    } else {
+        const productCard = btn.closest('.group') || btn.closest('.bg-cardBg');
+        if (!productCard) return;
+        const nameEl = productCard.querySelector('h3');
+        const priceEl = productCard.querySelector('.text-neonGreen');
+        const imgEl = productCard.querySelector('img');
+        if (!nameEl || !priceEl || !imgEl) return;
+        const name = nameEl.innerText;
+        const price = parseFloat(priceEl.innerText.replace(' ر.س', '').trim());
+        const image = imgEl.src;
+        product = { name, price, image };
+    }
+    addToCart(product);
 });
 
 // إضافة منتج للسلة
@@ -40,7 +40,7 @@ function addToCart(product) {
     cart.push(product);
     localStorage.setItem('dlt_cart', JSON.stringify(cart));
     
-    updateCartCount();
+    refreshCartViews();
     showToast(`تمت إضافة ${product.name} للسلة`);
 }
 
@@ -50,14 +50,42 @@ function removeFromCart(index) {
     cart.splice(index, 1);
     localStorage.setItem('dlt_cart', JSON.stringify(cart));
     
-    renderCartItems(); // إعادة رسم السلة
-    updateCartCount();
+    refreshCartViews();
     showToast('تم حذف المنتج من السلة');
 }
 
 // جلب محتويات السلة
 function getCart() {
     return JSON.parse(localStorage.getItem('dlt_cart')) || [];
+}
+
+function refreshCartViews() {
+    updateCartCount();
+    if (window.location.pathname.includes('cart.html')) {
+        renderCartItems();
+    }
+    if (typeof window.renderCheckout === 'function') {
+        window.renderCheckout();
+    }
+}
+
+function removeOneByKey(name, price, image) {
+    let cart = getCart();
+    const idx = cart.findIndex(it => it.name === name && it.price === price && it.image === image);
+    if (idx !== -1) {
+        cart.splice(idx, 1);
+        localStorage.setItem('dlt_cart', JSON.stringify(cart));
+        refreshCartViews();
+        showToast('تم حذف عنصر من السلة');
+    }
+}
+
+function removeAllByKey(name, price, image) {
+    let cart = getCart();
+    cart = cart.filter(it => !(it.name === name && it.price === price && it.image === image));
+    localStorage.setItem('dlt_cart', JSON.stringify(cart));
+    refreshCartViews();
+    showToast('تم حذف المجموعة من السلة');
 }
 
 // تحديث عداد السلة في القائمة العلوية

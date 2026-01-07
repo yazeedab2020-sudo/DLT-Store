@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل الدخول - DLT Store</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Changa:wght@300;400;500;700;800&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        darkBg: '#0B001A',
+                        cardBg: '#1A0B2E',
+                        neonGreen: '#00FFA3',
+                        neonPurple: '#D900FF',
+                        neonBlue: '#00F0FF',
+                        spaceBlue: '#2D1B69',
+                    },
+                    fontFamily: {
+                        sans: ['Changa', 'sans-serif'],
+                        pixel: ['Silkscreen', 'cursive'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Changa', sans-serif; }
+    </style>
+</head>
+<body class="bg-darkBg text-white flex flex-col min-h-screen">
+    <nav class="bg-cardBg/80 backdrop-blur-md sticky top-0 z-50 border-b border-white/10 shadow-[0_0_15px_rgba(188,19,254,0.3)]">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="text-xl md:text-2xl font-bold font-pixel text-neonPurple tracking-wider flex items-center gap-2">
+                <a href="index.html" class="flex items-center gap-2">
+                    <span class="text-2xl md:text-3xl">🪐</span> DLT <span class="text-neonBlue">STORE</span>
+                </a>
+            </div>
+            <div class="flex items-center space-x-2 md:space-x-4 space-x-reverse">
+                <div id="account-area" class="flex items-center"></div>
+                <a href="checkout.html" class="relative hover:text-neonBlue transition transform hover:scale-110">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+                    <span id="cart-count" class="absolute -top-2 -right-2 bg-neonBlue text-darkBg text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center shadow-[0_0_10px_#00F0FF] hidden">0</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+    <section class="container mx-auto px-4 py-12 flex-grow">
+        <div class="max-w-md mx-auto bg-cardBg/80 border border-white/10 rounded-2xl p-8 shadow-[0_0_30px_rgba(217,0,255,0.1)]">
+            <h1 class="text-3xl font-bold text-center mb-6 font-pixel text-neonGreen">تسجيل الدخول</h1>
+            <p class="text-center text-gray-300 mb-8">اختر طريقة التسجيل</p>
+            <div class="space-y-4">
+                <button id="google-login" class="w-full bg-neonGreen text-darkBg font-bold py-3 rounded-lg hover:shadow-[0_0_15px_rgba(0,255,163,0.4)] transition flex items-center justify-center gap-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-darkBg" viewBox="0 0 24 24" fill="currentColor"><path d="M21.35 11.1h-9.18v2.98h5.27c-.23 1.25-1.4 3.66-5.27 3.66-3.17 0-5.76-2.61-5.76-5.82s2.59-5.82 5.76-5.82c1.81 0 3.02.77 3.72 1.43l2.54-2.46C17.29 3.96 15.5 3 13.4 3 8.94 3 5.35 6.58 5.35 11.04s3.59 8.04 8.05 8.04c4.66 0 7.73-3.27 7.73-7.86 0-.53-.07-.88-.18-1.12z"/></svg>
+                    تسجيل الدخول بواسطة Google
+                </button>
+                <button id="email-login-toggle" class="w-full border border-neonGreen/40 text-neonGreen py-3 rounded-lg hover:bg-neonGreen/10 transition font-bold">بواسطة البريد</button>
+                <div id="email-login-form" class="space-y-3 hidden">
+                    <input id="name-input" type="text" placeholder="الاسم" class="w-full bg-black/30 border border-white/10 rounded-lg px-3 py-2 text-white placeholder-gray-400 focus:outline-none focus:border-neonPurple">
+                    <input id="email-input" type="email" placeholder="البريد الإلكتروني" class="w-full bg-black/30 border border-white/10 rounded-lg px-3 py-2 text-white placeholder-gray-400 focus:outline-none focus:border-neonPurple">
+                    <button id="email-login-submit" class="w-full bg-neonPurple text-white py-3 rounded-lg font-bold hover:bg-neonPurple/80 transition">تسجيل</button>
+                    <p class="text-xs text-gray-400 text-center">استخدم البريد admin@dlt.store لتفعيل وضع الأدمن</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer class="bg-cardBg/50 pt-12 pb-8 border-t border-white/10 mt-12 backdrop-blur-sm relative z-10">
+        <div class="container mx-auto px-4 text-center text-gray-600 text-sm">
+            <p>&copy; 2024 DLT Store. جميع الحقوق محفوظة.</p>
+        </div>
+    </footer>
+    <script src="auth.js"></script>
+    <script src="login.js"></script>
+</body>
+</html>
